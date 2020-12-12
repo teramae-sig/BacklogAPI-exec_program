@@ -1,4 +1,6 @@
 <?php
+namespace BACKLOG_API;
+
 /**
  * BackLog APIへのリクエストクラス
  */

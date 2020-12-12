@@ -1,4 +1,6 @@
 <?php
+namespace BACKLOG_API;
+
 use BACKLOG_API\Env;
 
 if (empty($argv[1])) {
@@ -8,8 +10,8 @@ if (empty($argv[1])) {
 $keyword = $argv[1];
 
 // ファイル読み込み --------------------------------------------------------------------------------
-require_once('require/base.php');
-require_once('require/BackLogRequester.class.php');
+require_once(__DIR__.'/../require/base.php');
+require_once(__DIR__.'/../require/BackLogRequester.class.php');
 
 /*
     指定したプロジェクトからwiki情報一覧を取得して出力する

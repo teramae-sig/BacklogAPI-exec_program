@@ -6,7 +6,7 @@ namespace BACKLOG_API;
  */
 
 // composer内容を読み込み
-require_once('./vendor/autoload.php');
+require_once(__DIR__.'/../vendor/autoload.php');
 
 // https://mindtrust.jp/techfirst/php-dotenv/
 use Dotenv\Dotenv;

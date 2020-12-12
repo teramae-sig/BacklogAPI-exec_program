@@ -1,4 +1,6 @@
 <?php
+namespace BACKLOG_API;
+
 use BACKLOG_API\Env;
 
 if (empty($argv[1]) || empty($argv[2])) {
@@ -9,8 +11,8 @@ $keyword = $argv[1];
 $exclude = $argv[2];
 
 // ファイル読み込み --------------------------------------------------------------------------------
-require_once('require/base.php');
-require_once('require/BackLogRequester.class.php');
+require_once(__DIR__.'/../require/base.php');
+require_once(__DIR__.'/../require/BackLogRequester.class.php');
 
 /*
     wiki情報を登録する
