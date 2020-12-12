@@ -93,9 +93,9 @@ class BackLogRequester {
 
         // オプションを設定
         curl_setopt($curl, CURLOPT_URL, $url); // 取得するURLを指定
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET'); // リクエスト時のメソッド
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // 実行結果を文字列で返す
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // サーバー証明書の検証を行わない
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET'); // リクエスト時のメソッド
 
         // cURLリクエスト実施
         $response = curl_exec($curl);
@@ -118,11 +118,10 @@ class BackLogRequester {
         // オプションを設定
         curl_setopt($curl, CURLOPT_URL, $url); // 取得するURLを指定
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST'); // リクエスト時のメソッド
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // 実行結果を文字列で返す
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // サーバー証明書の検証を行わない
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postData));
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);  // サーバー証明書の検証を行わない(オレオレ証明書対策)
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);  //
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // 実行結果を文字列で返す
 
         // cURLリクエスト実施
         $response = curl_exec($curl);
@@ -145,11 +144,10 @@ class BackLogRequester {
         // オプションを設定
         curl_setopt($curl, CURLOPT_URL, $url); // リクエスト先のURL
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH'); // リクエスト時のメソッド
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // 実行結果を文字列で返す
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // サーバー証明書の検証を行わない
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
         curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);// Content-Typeを設定する
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // 実行結果を文字列で返す
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);  // サーバー証明書の検証を行わない(オレオレ証明書対策)
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);  //
 
         // cURLリクエスト実施
         $response = curl_exec($curl);
