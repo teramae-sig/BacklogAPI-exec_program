@@ -55,4 +55,4 @@ foreach($pages as $pageInfo) {
 }
 
 // 成功した旨を出力する
-echo 'success'.PHP_EOL
+echo 'success'.PHP_EOL;
