@@ -18,13 +18,13 @@ require_once(__DIR__.'/../require/BackLogRequester.class.php');
     wiki情報を登録する
     指定したPJから取得したwiki情報をベースにする
 */
-$source = new BackLogRequester(Env::get('SRC_BL_DOMAIN'), Env::get('SRC_BL_ACCESSKEY'));
-$register = new BackLogRequester(Env::get('REGISTER_BL_DOMAIN'), Env::get('REGISTER_BL_ACCESSKEY'));
+$source = new BackLogRequester(Env::get('INSERT_SRC_BL_DOMAIN'), Env::get('INSERT_SRC_BL_ACCESSKEY'));
+$register = new BackLogRequester(Env::get('INSERT_REGISTER_BL_DOMAIN'), Env::get('INSERT_REGISTER_BL_ACCESSKEY'));
 
 // 取得元から情報取得 ----------------------------------------------------------------------
 $params = [
     // 取得元のプロジェクトID
-    'projectIdOrKey' => Env::get('SRC_PJ_ID'),
+    'projectIdOrKey' => Env::get('INSERT_SRC_PJ_ID'),
     // 検索キーワード
     'keyword' => $keyword
 ];
@@ -34,12 +34,12 @@ $response = $source->get('wikis', $params);
 $pages = [];
 $i = 0;
 foreach($response as $val){
-    // 除外対象の単語が含まれるページ名だった場合、処理しない
+    // 対象の単語が含まれないページ名だった場合、処理しない
     if(!strpos($val['name'], $exclude)){
         continue;
     }
 
-    $pages[$i]['projectId'] = Env::get('REGISTER_PJ_ID');
+    $pages[$i]['projectId'] = Env::get('INSERT_REGISTER_PJ_ID');
     $pages[$i]['name'] = $val['name'];
     $pages[$i]['content'] = $val['content'];
     // 取得結果のチェック用

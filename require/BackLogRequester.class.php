@@ -12,7 +12,8 @@ class BackLogRequester {
 
     /**
      * コンストラクタ
-     * @param array $info バックログの情報
+     * @param string $domain ドメイン
+     * @param string $akey アクセスキー
      */
     function __construct(string $domain, string $akey) {
         // ベースとなるURLを作成
@@ -47,13 +48,13 @@ class BackLogRequester {
     /**
      * バックログにPOSTリクエストを送る
      * @param string $name API名
-     * @param array $name POSTするデータ
+     * @param array $params 送信するデータ
      * @return array レスポンス情報(連想配列)
      */
     function post(string $name , array $params) {
         // POSTデータがなければエラー
         if(empty($params)) {
-            throw new Exception('POSTデータがありません');
+            throw new \Exception('POSTデータがありません');
         }
 
         // APIにリクエストを送る
@@ -61,6 +62,25 @@ class BackLogRequester {
 
         echo '送信先URL:'.$url.PHP_EOL;
         return $this->postReq($url, $params);
+    }
+
+    /**
+     * バックログにPATCHリクエストを送る
+     * @param string $name API名
+     * @param array $params 送信するデータ
+     * @return array レスポンス情報(連想配列)
+     */
+    function patch(string $name , array $params) {
+        // POSTデータがなければエラー
+        if(empty($params)) {
+            throw new \Exception('PATCHデータがありません');
+        }
+
+        // APIにリクエストを送る
+        $url = $this->base.$name.'?apiKey='.$this->akey;
+        echo '送信先URL:'.$url.PHP_EOL;
+
+        return $this->patchReq($url, $params);
     }
 
     /**
@@ -97,12 +117,39 @@ class BackLogRequester {
 
         // オプションを設定
         curl_setopt($curl, CURLOPT_URL, $url); // 取得するURLを指定
-        curl_setopt($curl,CURLOPT_POST, TRUE); // POST通信をONにする
-        //curl_setopt($curl,CURLOPT_POSTFIELDS, $POST_DATA); // ↓はmultipartリクエストを許可していないサーバの場合はダメ
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST'); // リクエスト時のメソッド
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($postData));
-        curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, FALSE);  // サーバー証明書の検証を行わない(オレオレ証明書対策)
-        curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, FALSE);  //
-        curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE); // 実行結果を文字列で返す
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);  // サーバー証明書の検証を行わない(オレオレ証明書対策)
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);  //
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // 実行結果を文字列で返す
+
+        // cURLリクエスト実施
+        $response = curl_exec($curl);
+
+        // セッションを終了
+        curl_close($curl);
+
+        return $response;
+    }
+
+    /**
+     * cURLでPATCHリクエストを送る
+     * @param string $url URL
+     * @param array $params PATCHするデータ
+     */
+    private function patchReq(string $url, array $params) {
+        // cURLセッションを初期化する
+        $curl = curl_init();
+
+        // オプションを設定
+        curl_setopt($curl, CURLOPT_URL, $url); // リクエスト先のURL
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH'); // リクエスト時のメソッド
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
+        curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/x-www-form-urlencoded']);// Content-Typeを設定する
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // 実行結果を文字列で返す
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);  // サーバー証明書の検証を行わない(オレオレ証明書対策)
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);  //
 
         // cURLリクエスト実施
         $response = curl_exec($curl);
