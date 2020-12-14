@@ -4,7 +4,8 @@ namespace BACKLOG_API;
 /**
  * BackLog APIへのリクエストクラス
  */
-class BackLogRequester {
+class BackLogRequester
+{
     /** @var string $base ベースとなるURL */
     public $base = '';
     /** @var string $akey APIのKEY */
@@ -15,7 +16,8 @@ class BackLogRequester {
      * @param string $domain ドメイン
      * @param string $akey アクセスキー
      */
-    function __construct(string $domain, string $akey) {
+    public function __construct(string $domain, string $akey)
+    {
         // ベースとなるURLを作成
         $this->base = 'https://' . $domain . '/api/v2/';
         // API_KEYを設定
@@ -28,13 +30,14 @@ class BackLogRequester {
      * @param array  $params URLパラメーター情報
      * @return array レスポンス情報(連想配列)
      */
-    function get(string $name, array $params) {
+    public function get(string $name, array $params)
+    {
         // URLを作成する
         $url = $this->base.$name.'?apiKey='.$this->akey;
 
         // パラメータがあればそれも付与
-        if(!empty($params)) {
-            $url .= '&' . http_build_query($params, '','&');
+        if (!empty($params)) {
+            $url .= '&' . http_build_query($params, '', '&');
         }
 
         // APIにリクエストを送る
@@ -51,9 +54,10 @@ class BackLogRequester {
      * @param array $params 送信するデータ
      * @return array レスポンス情報(連想配列)
      */
-    function post(string $name , array $params) {
+    public function post(string $name, array $params)
+    {
         // POSTデータがなければエラー
-        if(empty($params)) {
+        if (empty($params)) {
             throw new \Exception('POSTデータがありません');
         }
 
@@ -70,9 +74,10 @@ class BackLogRequester {
      * @param array $params 送信するデータ
      * @return array レスポンス情報(連想配列)
      */
-    function patch(string $name , array $params) {
+    public function patch(string $name, array $params)
+    {
         // POSTデータがなければエラー
-        if(empty($params)) {
+        if (empty($params)) {
             throw new \Exception('PATCHデータがありません');
         }
 
@@ -87,7 +92,8 @@ class BackLogRequester {
      * cURLでGETリクエストを送る
      * @param string $url URL
      */
-    private function getReq(string $url){
+    private function getReq(string $url)
+    {
         // cURLセッションを初期化する
         $curl = curl_init();
 
@@ -111,7 +117,8 @@ class BackLogRequester {
      * @param string $url URL
      * @param array $postData POSTするデータ
      */
-    private function postReq(string $url, array $postData) {
+    private function postReq(string $url, array $postData)
+    {
         // cURLセッションを初期化する
         $curl = curl_init();
 
@@ -137,7 +144,8 @@ class BackLogRequester {
      * @param string $url URL
      * @param array $params PATCHするデータ
      */
-    private function patchReq(string $url, array $params) {
+    private function patchReq(string $url, array $params)
+    {
         // cURLセッションを初期化する
         $curl = curl_init();
 
@@ -157,5 +165,4 @@ class BackLogRequester {
 
         return $response;
     }
-
 }

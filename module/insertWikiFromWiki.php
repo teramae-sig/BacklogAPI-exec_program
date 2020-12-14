@@ -33,9 +33,9 @@ $response = $source->get('wikis', $params);
 // 更新用の配列に詰め変える
 $pages = [];
 $i = 0;
-foreach($response as $val){
+foreach ($response as $val) {
     // 対象の単語が含まれないページ名だった場合、処理しない
-    if(!strpos($val['name'], $exclude)){
+    if (!strpos($val['name'], $exclude)) {
         continue;
     }
 
@@ -49,7 +49,7 @@ foreach($response as $val){
 
 
 // 登録先に登録 ----------------------------------------------------------------------
-foreach($pages as $pageInfo) {
+foreach ($pages as $pageInfo) {
     echo '登録:'.$pageInfo['name'].PHP_EOL;
     $response = $register->post('wikis', $pageInfo);
 

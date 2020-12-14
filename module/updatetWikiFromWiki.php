@@ -36,9 +36,9 @@ $response = $source->get('wikis', $params);
 
 // 更新用の配列に詰め変える
 $pages = [];
-foreach($response as $val){
+foreach ($response as $val) {
     // 対象の単語が含まれないページ名だった場合、処理しない
-    if(!strpos($val['name'], $exclude)){
+    if (!strpos($val['name'], $exclude)) {
         continue;
     }
 
@@ -57,9 +57,9 @@ $response = $register->get('wikis', $params);
 
 // 更新用の配列に詰め変える
 $tagets = [];
-foreach($response as $val){
+foreach ($response as $val) {
     // 対象の単語が含まれないページ名だった場合、処理しない
-    if(!strpos($val['name'], $exclude)){
+    if (!strpos($val['name'], $exclude)) {
         continue;
     }
 
@@ -77,7 +77,7 @@ foreach($response as $val){
     wikiページの更新 リファレンス
     https://developer.nulab.com/ja/docs/backlog/api/2/update-wiki-page/#
 */
-foreach($tagets as $wikiId => $pageInfo) {
+foreach ($tagets as $wikiId => $pageInfo) {
     // API名
     $apiName = 'wikis/'.$wikiId;
 

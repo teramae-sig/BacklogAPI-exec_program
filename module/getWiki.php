@@ -29,7 +29,7 @@ $params = [
 ];
 $response = $source->get('wikis', $params);
 
-foreach($response as $val) {
+foreach ($response as $val) {
     var_dump($val['name']);
 }
 
