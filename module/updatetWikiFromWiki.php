@@ -82,7 +82,7 @@ foreach ($tagets as $wikiId => $pageInfo) {
     $apiName = 'wikis/'.$wikiId;
 
     // 更新情報を送信する
-    $response = $source->patch($apiName, $pageInfo);
+    $response = $register->patch($apiName, $pageInfo);
 
     // TODO: 成功したかログ出力する
     // var_dump($response);
